@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Livewire\AdminUser;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +29,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function() {
     Route::get('dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('users', AdminUser::class)->name('admin-users');
+    // Route::resource('users', App\Http\Controllers\AdminUserController::class);
+    Route::prefix("/users")->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminUserController::class, 'index'])->name('admin-user');
+        Route::get('/create', [App\Http\Controllers\AdminUserController::class, 'create'])->name('create-admin-user');
+        Route::post('/', [App\Http\Controllers\AdminUserController::class, 'store'])->name('store-admin-user');
+        Route::get('/show/{id}', [App\Http\Controllers\AdminUserController::class, 'show'])->name('show-admin-user');
+        Route::post('/{id}', [App\Http\Controllers\AdminUserController::class, 'update'])->name('update-admin-user');
+        Route::delete('/{id}', [App\Http\Controllers\AdminUserController::class, 'destroy']);
+    });
 });
 
 Route::group(['prefix' => 'employee', 'middleware' => ['isEmployee', 'auth']], function() {
