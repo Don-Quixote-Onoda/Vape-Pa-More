@@ -38,6 +38,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
         Route::post('/{id}', [App\Http\Controllers\AdminUserController::class, 'update'])->name('update-admin-user');
         Route::delete('/{id}', [App\Http\Controllers\AdminUserController::class, 'destroy']);
     });
+
+    Route::prefix("/products")->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminProdutsController::class, 'index'])->name('admin-products');
+        Route::post('/store', [App\Http\Controllers\AdminProdutsController::class, 'store'])->name('admin-store-products');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminProdutsController::class, 'edit'])->name('admin-edit-products');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminProdutsController::class, 'update'])->name('admin-update-products');
+        Route::delete('/delete/{id}', [App\Http\Controllers\AdminProdutsController::class, 'destroy'])->name('admin-destroy-products');
+    });
+
+    Route::prefix('/payments')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminPaymentsController::class, 'index'])->name('admin-payments');
+        Route::post('/', [App\Http\Controllers\AdminPaymentsController::class, 'store'])->name('admin-store-payments');
+
+    });
 });
 
 Route::group(['prefix' => 'employee', 'middleware' => ['isEmployee', 'auth']], function() {

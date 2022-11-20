@@ -379,11 +379,11 @@ $(document).ready(function () {
         [5, 10, 15, "All"],
       ],
       scrollX: true,
-      order: [[2, "asc"]],
+      order: [[0, "asc"]],
       columnDefs: [
         {
           orderable: false,
-          targets: [, 0, 6, -1],
+          targets: [-1],
         },
       ],
       language: {
@@ -392,6 +392,57 @@ $(document).ready(function () {
       },
     });
   }
+
+//   Products Table
+var productsTable = $("#productsTable");
+  if (productsTable.length != 0) {
+    productsTable.DataTable({
+      info: false,
+      lengthChange: false,
+      lengthMenu: [
+        [5, 10, 15, -1],
+        [5, 10, 15, "All"],
+      ],
+      scrollX: true,
+      order: [[0, "asc"]],
+      columnDefs: [
+        {
+          orderable: false,
+          targets: [-1],
+        },
+      ],
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search...",
+      },
+    });
+  }
+
+
+  //   Payments Table
+var paymentsTable = $("#paymentsTable");
+if (paymentsTable.length != 0) {
+  paymentsTable.DataTable({
+    info: false,
+    lengthChange: false,
+    lengthMenu: [
+      [5, 10, 15, -1],
+      [5, 10, 15, "All"],
+    ],
+    scrollX: true,
+    order: [[0, "asc"]],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [-1],
+      },
+    ],
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search...",
+    },
+  });
+}
 
   var productSale = $("#product-sale");
   if (productSale.length != 0) {
