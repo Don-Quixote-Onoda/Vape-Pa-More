@@ -50,7 +50,34 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
     Route::prefix('/payments')->group(function() {
         Route::get('/', [App\Http\Controllers\AdminPaymentsController::class, 'index'])->name('admin-payments');
         Route::post('/', [App\Http\Controllers\AdminPaymentsController::class, 'store'])->name('admin-store-payments');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminPaymentsController::class, 'edit'])->name('admin-edit-payments');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminPaymentsController::class, 'update'])->name('admin-update-payments');
+        Route::delete('/delete/{id}', [App\Http\Controllers\AdminPaymentsController::class, 'destroy'])->name('admin-delete-payments');
 
+    });
+
+    Route::prefix('/customers')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminCustomerController::class, 'index'])->name('admin-customers');
+        Route::post('/', [App\Http\Controllers\AdminCustomerController::class, 'store'])->name('admin-store-customers');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminCustomerController::class, 'edit'])->name('admin-edit-customers');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminCustomerController::class, 'update'])->name('admin-update-customers');
+        Route::delete('/{id}', [App\Http\Controllers\AdminCustomerController::class, 'destroy'])->name('admin-delete-customers');
+    });
+
+    Route::prefix('/inventory_controls')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminInventoryControlsController::class, 'index'])->name('admin-inventory_controls');
+        Route::post('/', [App\Http\Controllers\AdminInventoryControlsController::class, 'store'])->name('admin-store-inventory_controls');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminInventoryControlsController::class, 'edit'])->name('admin-edit-inventory_controls');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminInventoryControlsController::class, 'update'])->name('admin-update-inventory_controls');
+        Route::delete('/{id}', [App\Http\Controllers\AdminInventoryControlsController::class, 'destroy'])->name('admin-delete-inventory_controls');
+    });
+
+    Route::prefix('/orders')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('admin-orders');
+        Route::post('/', [App\Http\Controllers\AdminOrdersController::class, 'store'])->name('admin-store-orders');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminOrdersController::class, 'edit'])->name('admin-edit-order');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminOrdersController::class, 'update'])->name('admin-update-order');
+        Route::delete('/{id}', [App\Http\Controllers\AdminOrdersController::class, 'destroy'])->name('admin-delete-order');
     });
 });
 

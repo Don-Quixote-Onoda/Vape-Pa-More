@@ -444,6 +444,81 @@ if (paymentsTable.length != 0) {
   });
 }
 
+  //   Customer Table
+  var customersTable = $("#customersTable");
+  if (customersTable.length != 0) {
+    customersTable.DataTable({
+      info: false,
+      lengthChange: false,
+      lengthMenu: [
+        [5, 10, 15, -1],
+        [5, 10, 15, "All"],
+      ],
+      scrollX: true,
+      order: [[0, "asc"]],
+      columnDefs: [
+        {
+          orderable: false,
+          targets: [-1],
+        },
+      ],
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search...",
+      },
+    });
+  }
+
+//   Inventory Controls Table
+var inventoryControlsTable = $("#inventoryControlsTable");
+if (inventoryControlsTable.length != 0) {
+  inventoryControlsTable.DataTable({
+    info: false,
+    lengthChange: false,
+    lengthMenu: [
+      [5, 10, 15, -1],
+      [5, 10, 15, "All"],
+    ],
+    scrollX: true,
+    order: [[0, "asc"]],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [-1],
+      },
+    ],
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search...",
+    },
+  });
+}
+
+//   Orders Table
+var ordersTable = $("#ordersTable");
+if (ordersTable.length != 0) {
+  ordersTable.DataTable({
+    info: false,
+    lengthChange: false,
+    lengthMenu: [
+      [5, 10, 15, -1],
+      [5, 10, 15, "All"],
+    ],
+    scrollX: true,
+    order: [[0, "asc"]],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [-1],
+      },
+    ],
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search...",
+    },
+  });
+}
+
   var productSale = $("#product-sale");
   if (productSale.length != 0) {
     productSale.DataTable({

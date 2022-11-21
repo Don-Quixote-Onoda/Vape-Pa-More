@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Customer;
 use App\Models\Payment;
 
-class AdminPaymentsController extends Controller
+class AdminOrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +16,11 @@ class AdminPaymentsController extends Controller
      */
     public function index()
     {
+        $orders = Order::orderBy('id', 'desc')->get();
+        $customers = Customer::orderBy('id', 'desc')->get();
         $payments = Payment::orderBy('id', 'desc')->get();
 
-        return view('payments.index', ['payments'=> $payments]);
+        return view('orders.index', ['orders' => $orders, 'customers' => $customers, 'payments' => $payments]);
     }
 
     /**
@@ -37,12 +41,16 @@ class AdminPaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $validatePayment = $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'payment_id' => 'required'
         ]);
 
-        Payment::create($validatePayment);
+        $order = new Order;
+        $order->user_id = auth()->user()->id;
+        $order->customer_id = $request->customer_id;
+        $order->payment_id = $request->payment_id;
+        $order->save();
 
         return redirect()->back();
     }
@@ -66,8 +74,11 @@ class AdminPaymentsController extends Controller
      */
     public function edit($id)
     {
-        $payment = Payment::find($id);
-        return view('payments.edit', ['payment' => $payment]);
+        $order = Order::find($id);
+        $payments = Payment::orderBy('id', 'desc')->get();
+        $customers = Customer::orderBy('id', 'desc')->get();
+
+        return view('orders.edit', ['order' => $order, 'payments' => $payments, 'customers' => $customers]);
     }
 
     /**
@@ -80,17 +91,17 @@ class AdminPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
+            'customer_id' => 'required',
+            'payment_id' => 'required'
         ]);
 
-        $payment = Payment::find($id);
-        $payment->update([
-            'name' => $request->name,
-            'quantity' => $request->quantity
-        ]);
+        $order = Order::find($id);
+        $order->user_id = auth()->user()->id;
+        $order->customer_id = $request->customer_id;
+        $order->payment_id = $request->payment_id;
+        $order->save();
 
-        return redirect('/admin/payments');
+        return redirect('/admin/orders');
     }
 
     /**
@@ -101,8 +112,8 @@ class AdminPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        $payment = Payment::find($id);
-        $payment->delete();
+        $order = Order::find($id);
+        $order->delete();
 
         return redirect()->back();
     }

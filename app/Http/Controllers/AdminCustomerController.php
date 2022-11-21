@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Payment;
+use App\Models\Customer;
 
-class AdminPaymentsController extends Controller
+class AdminCustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,10 @@ class AdminPaymentsController extends Controller
      */
     public function index()
     {
-        $payments = Payment::orderBy('id', 'desc')->get();
 
-        return view('payments.index', ['payments'=> $payments]);
+        $customers = Customer::orderBy('id', 'desc')->get();
+
+        return view('customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -37,12 +38,13 @@ class AdminPaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $validatePayment = $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
+        $validateCustomer = $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'age' => 'required'
         ]);
 
-        Payment::create($validatePayment);
+        Customer::create($validateCustomer);
 
         return redirect()->back();
     }
@@ -66,8 +68,9 @@ class AdminPaymentsController extends Controller
      */
     public function edit($id)
     {
-        $payment = Payment::find($id);
-        return view('payments.edit', ['payment' => $payment]);
+        $customer = Customer::find($id);
+
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -80,17 +83,20 @@ class AdminPaymentsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'age' => 'required'
         ]);
 
-        $payment = Payment::find($id);
-        $payment->update([
-            'name' => $request->name,
-            'quantity' => $request->quantity
+        $customer = Customer::find($id);
+        $customer->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'age' => $request->age
         ]);
 
-        return redirect('/admin/payments');
+        return redirect('/admin/customers');
+
     }
 
     /**
@@ -101,8 +107,8 @@ class AdminPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        $payment = Payment::find($id);
-        $payment->delete();
+        $customer = Customer::find($id);
+        $customer->delete();
 
         return redirect()->back();
     }

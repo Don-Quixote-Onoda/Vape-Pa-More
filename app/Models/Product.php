@@ -15,4 +15,14 @@ class Product extends Model
         'price',
         'status'
     ];
+
+    protected $table = 'products';
+    public $primary_key = 'id';
+    public $timestamp = true;
+
+    public function inventory_controls() {
+        return $this->hasMany('App\Models\InventoryControl');
+    }
+
+
 }

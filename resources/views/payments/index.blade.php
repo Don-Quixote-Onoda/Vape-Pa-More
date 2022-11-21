@@ -62,10 +62,10 @@
                         <td>{{ $payment->name }}</td>
                         <td>{{ $payment->quantity }}</td>
                         <td>
-                            <a href="{{route('admin-edit-products', ['id' => $payment->id])}}">
+                            <a href="{{route('admin-edit-payments', ['id' => $payment->id])}}">
                                 <i class="mdi mdi-pencil text-success"></i>
                             </a>
-                            <form action="{{route('admin-destroy-products', $payment->id)}}" method="POST" class="d-inline">
+                            <form action="{{route('admin-delete-payments', $payment->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method("DELETE")
                                 <button type="submit"><i class="mdi mdi-delete text-danger"></i></button>

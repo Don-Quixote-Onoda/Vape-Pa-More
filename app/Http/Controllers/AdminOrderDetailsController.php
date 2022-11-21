@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Payment;
 
-class AdminPaymentsController extends Controller
+class AdminOrderDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class AdminPaymentsController extends Controller
      */
     public function index()
     {
-        $payments = Payment::orderBy('id', 'desc')->get();
-
-        return view('payments.index', ['payments'=> $payments]);
+        //
     }
 
     /**
@@ -37,14 +34,7 @@ class AdminPaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $validatePayment = $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
-        ]);
-
-        Payment::create($validatePayment);
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -66,8 +56,7 @@ class AdminPaymentsController extends Controller
      */
     public function edit($id)
     {
-        $payment = Payment::find($id);
-        return view('payments.edit', ['payment' => $payment]);
+        //
     }
 
     /**
@@ -79,18 +68,7 @@ class AdminPaymentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
-        ]);
-
-        $payment = Payment::find($id);
-        $payment->update([
-            'name' => $request->name,
-            'quantity' => $request->quantity
-        ]);
-
-        return redirect('/admin/payments');
+        //
     }
 
     /**
@@ -101,9 +79,6 @@ class AdminPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        $payment = Payment::find($id);
-        $payment->delete();
-
-        return redirect()->back();
+        //
     }
 }

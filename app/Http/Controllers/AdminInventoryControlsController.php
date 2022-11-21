@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Payment;
+use App\Models\InventoryControl;
+use App\Models\Product;
 
-class AdminPaymentsController extends Controller
+class AdminInventoryControlsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,10 @@ class AdminPaymentsController extends Controller
      */
     public function index()
     {
-        $payments = Payment::orderBy('id', 'desc')->get();
+        $inventory_controls = InventoryControl::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
 
-        return view('payments.index', ['payments'=> $payments]);
+        return view('inventory-controls.index', ['inventory_controls' => $inventory_controls, 'products' => $products]);
     }
 
     /**
@@ -37,12 +39,15 @@ class AdminPaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $validatePayment = $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
+        $this->validate($request, [
+            'quantity_stock' => 'required|integer',
+            'product_id' => 'required'
         ]);
 
-        Payment::create($validatePayment);
+        $inventory_control = new InventoryControl;
+        $inventory_control->quantity_stock = $request->quantity_stock;
+        $inventory_control->product_id = $request->product_id;
+        $inventory_control->save();
 
         return redirect()->back();
     }
@@ -66,8 +71,10 @@ class AdminPaymentsController extends Controller
      */
     public function edit($id)
     {
-        $payment = Payment::find($id);
-        return view('payments.edit', ['payment' => $payment]);
+        $inventory_control = InventoryControl::find($id);
+        $products = Product::orderBy('id', 'desc')->get();
+
+        return view('inventory-controls.edit', ['inventory_control'=>    $inventory_control, 'products' => $products]);
     }
 
     /**
@@ -79,18 +86,14 @@ class AdminPaymentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'quantity' => 'required'
-        ]);
+        $inventory_control = InventoryControl::find($id);
 
-        $payment = Payment::find($id);
-        $payment->update([
-            'name' => $request->name,
-            'quantity' => $request->quantity
-        ]);
+        $inventory_control->quantity_stock = $request->quantity_stock;
+        $inventory_control->product_id = $request->product_id;
 
-        return redirect('/admin/payments');
+        $inventory_control->save();
+
+        return redirect('/admin/inventory_controls');
     }
 
     /**
@@ -101,8 +104,8 @@ class AdminPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        $payment = Payment::find($id);
-        $payment->delete();
+        $inventory_control = InventoryControl::find($id);
+        $inventory_control->delete();
 
         return redirect()->back();
     }
