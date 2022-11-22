@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\OrderDetail;
-use App\Models\Product;
 
-class AdminOrderDetailsController extends Controller
+class AdminSalesReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +13,7 @@ class AdminOrderDetailsController extends Controller
      */
     public function index()
     {
-        $orderDetails = OrderDetail::orderBy('id', 'desc')->get();
-        $products = Product::orderBy('id', 'desc')->get();
-
-        return view('order-details.index', ['order_details'=>$orderDetails, 'products'=>$products]);
+        //
     }
 
     /**
@@ -39,17 +34,7 @@ class AdminOrderDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'quantity_order' => 'required',
-            'product_id' => 'required'
-        ]);
-
-        $order_detail = new OrderDetail;
-        $order_detail->quantity_order = $request->quantity_order;
-        $order_detail->product_id = $request->product_id;
-        $order_detail->save();
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -71,10 +56,7 @@ class AdminOrderDetailsController extends Controller
      */
     public function edit($id)
     {
-        $orderDetail = OrderDetail::find($id);
-        $products = Product::orderBy('id', 'desc')->get();
-
-        return view('order-details.edit', ['order_detail'=>$orderDetail, 'products'=>$products]);
+        //
     }
 
     /**
@@ -86,19 +68,7 @@ class AdminOrderDetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $this->validate($request, [
-            'quantity_order' => 'required',
-            'product_id' => 'required'
-        ]);
-
-
-        $order_detail = OrderDetail::find($id);
-        $order_detail->quantity_order = $request->quantity_order;
-        $order_detail->product_id = $request->product_id;
-        $order_detail->save();
-
-        return redirect('/admin/order_details');
+        //
     }
 
     /**
@@ -109,9 +79,6 @@ class AdminOrderDetailsController extends Controller
      */
     public function destroy($id)
     {
-        $order_detail = OrderDetail::find($id);
-        $order_detail->delete();
-
-        return redirect()->back();
+        //
     }
 }

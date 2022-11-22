@@ -79,6 +79,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
         Route::post('/update/{id}', [App\Http\Controllers\AdminOrdersController::class, 'update'])->name('admin-update-order');
         Route::delete('/{id}', [App\Http\Controllers\AdminOrdersController::class, 'destroy'])->name('admin-delete-order');
     });
+
+    Route::prefix('/order_details')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminOrderDetailsController::class, 'index'])->name('admin-order_details');
+        Route::post('/', [App\Http\Controllers\AdminOrderDetailsController::class, 'store'])->name('admin-store-order_details');
+        Route::get('/edit/{id}', [App\Http\Controllers\AdminOrderDetailsController::class, 'edit'])->name('admin-edit-order_details');
+        Route::post('/update/{id}', [App\Http\Controllers\AdminOrderDetailsController::class, 'update'])->name('admin-update-order_details');
+        Route::delete('/{id}', [App\Http\Controllers\AdminOrderDetailsController::class, 'destroy'])->name('admin-delete-order_details');
+    });
+
+    Route::prefix('/sales_report')->group(function() {
+        Route::get('/', [App\Http\Controllers\AdminSalesReportController::class, 'index'])->name('admin-sales_report');
+    });
 });
 
 Route::group(['prefix' => 'employee', 'middleware' => ['isEmployee', 'auth']], function() {

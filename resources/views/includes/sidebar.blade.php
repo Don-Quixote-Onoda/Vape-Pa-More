@@ -70,6 +70,30 @@
                  </li>
                  @endif
 
+                 {{-- Orders Details Management --}}
+                 @if (auth()->user()->role == 1)
+                 <li class="{{ Request::route()->getName() == 'admin-order_details' ? 'active' : '' }}">
+                     <a class="sidenav-item-link" href="{{ route('admin-order_details') }}">
+                         <i class="mdi mdi-notebook"></i>
+                         <span class="nav-text">Order Details Management</span>
+                     </a>
+                 </li>
+             @elseif(auth()->user()->role == 2)
+                 <li class="{{ Request::route()->getName() == 'admin-order_details' ? 'active' : '' }}">
+                     <a class="sidenav-item-link" href="/employee/users">
+                         <i class="mdi mdi-notebook"></i>
+                         <span class="nav-text">Order Details Management</span>
+                     </a>
+                 </li>
+             @else
+                 <li class="{{ Request::route()->getName() == 'admin-order_details' ? 'active' : '' }}">
+                     <a class="sidenav-item-link" href="/customer/users">
+                         <i class="mdi mdi-notebook"></i>
+                         <span class="nav-text">Order Details Management</span>
+                     </a>
+                 </li>
+                 @endif
+
                      {{-- Customers Management --}}
                      @if (auth()->user()->role == 1)
                  <li class="{{ Request::route()->getName() == 'admin-customers' ? 'active' : '' }}">
